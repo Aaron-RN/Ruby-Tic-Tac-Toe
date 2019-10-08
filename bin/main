@@ -1,8 +1,11 @@
+#!/usr/bin/env ruby
+
 puts "Hello World\n\n"
 
 BOARD_COLS = 3
 BOARD_ROWS = 3
 $Board = []
+$PlayerTurn = nil
 
 class String
   def gray
@@ -61,10 +64,19 @@ def displayBoard
 end
 
 def posToBoard(pos, sym, color)
-  $Board[pos] = "#{sym}".green if color == "green"
-  $Board[pos] = "#{sym}".red if color == "red"
-  $Board[pos] = "#{sym}".blue if color == "blue"
+  $Board[pos-1] = "#{sym}".green if color == "green"
+  $Board[pos-1] = "#{sym}".red if color == "red"
+  $Board[pos-1] = "#{sym}".blue if color == "blue"
   displayBoard()
 end
 
-posToBoard(1,"X", "red")
+def getPlayerInput
+  #puts "Player #{$PlayerTurn.symbol}'s Turn'"
+  print "Choose an available position to play: "
+  posChosen = gets.chomp.to_i
+  puts "\n"
+  #checkIfInteger(posChosen)
+  #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
+end
+
+
