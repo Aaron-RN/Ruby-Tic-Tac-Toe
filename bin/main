@@ -32,32 +32,32 @@ initializeBoard()
 
 def displayBoard
   for i in 0..(BOARD_COLS*BOARD_ROWS)+((BOARD_ROWS-1)*BOARD_COLS)-1
-      if i < 3
-        print " #{$Board[i]}" unless i == 2
-        print " |" unless i == 2
-        print " #{$Board[i]}" if i == 2
-      elsif i < 6 && i > 2
-        if i == 3
-          puts ""
+      if i < BOARD_COLS
+        print " #{$Board[i]}" unless i == BOARD_COLS-1
+        print " |" unless i == BOARD_COLS-1
+        print " #{$Board[i]}" if i == BOARD_COLS-1
+      elsif i < BOARD_COLS*2 && i > BOARD_COLS-1
+        if i == BOARD_COLS
+          puts "\n"
         end
         print "----"
-      elsif i < 9 && i > 5
-        if i == 6
-          puts ""
+      elsif i < BOARD_COLS*3 && i > (BOARD_COLS*2)-1
+        if i == BOARD_COLS*2
+          puts "\n"
         end
-        print " #{$Board[i-3]} |" unless i == 8
-        print " #{$Board[i-3]}" if i == 8
-      elsif i < 12 && i > 8
-        if i == 9
-          puts ""
+        print " #{$Board[i-3]} |" unless i == (BOARD_COLS*3)-1
+        print " #{$Board[i-3]}" if i == (BOARD_COLS*3)-1
+      elsif i < BOARD_COLS*4 && i > (BOARD_COLS*3)-1
+        if i == BOARD_COLS*3
+          puts "\n"
         end
         print "----"
-      elsif i < 15 && i > 11
-        if i == 12
-          puts ""
+      elsif i < BOARD_COLS*5 && i > (BOARD_COLS*4)-1
+        if i == BOARD_COLS*4
+          puts "\n"
         end
-        print " #{$Board[i-6]} |" unless i == 14
-        print " #{$Board[i-6]}" if i == 14
+        print " #{$Board[i-6]} |" unless i == (BOARD_COLS*5)-1
+        print " #{$Board[i-6]}" if i == (BOARD_COLS*5)-1
       end
     end
     puts "\n \n"
@@ -77,6 +77,7 @@ def getPlayerInput
   puts "\n"
   #checkIfInteger(posChosen)
   #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
+  posToBoard(posChosen, "X", "green")
 end
 
 
