@@ -30,6 +30,7 @@ def new_game
   $player_two = Player.new("O", "red")
   $Game = BoardLogic.new(rows = 3, cols = 3)
   $Game.whos_turn?($player_one)
+  $Game.player_setup($player_one, $player_two)
   display_board()
   get_player_input()
 end
@@ -80,7 +81,13 @@ def get_player_input
   pos_chosen = gets.chomp.to_i
   puts "\n"
 
-  pos_to_board(pos_chosen, $Game.player_turn.symbol, $Game.player_turn.color) if check_board_pos($Game, pos_chosen)
+  if check_board_pos($Game, pos_chosen)[0]
+    pos_to_board(pos_chosen, $Game.player_turn.symbol, $Game.player_turn.color)
+  else
+    puts check_board_pos($Game, pos_chosen)[1]
+    display_board()
+    get_player_input()
+  end
 end
 
 new_game()
