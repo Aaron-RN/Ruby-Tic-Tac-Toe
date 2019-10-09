@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BoardLogic
-  attr_reader :board, :rows, :cols, :player_turn, :player_one, :player_two, :turns_taken, :max_turns
+  attr_reader :board, :rows, :cols, :player_turn, :player_one, :player_two, :turns_taken, :max_turns, :game_over
 
   def initialize(rows, cols)
     @rows = rows
@@ -10,9 +10,10 @@ class BoardLogic
     @player_turn = nil
     @player_one = nil
     @player_two = nil
+    @game_over = false
     @turns_taken = 0
     @max_turns = rows * cols
-    for i in 1..@cols*@rows
+    (1..@cols * @rows).each do |i|
       @board << i
     end
   end
@@ -35,17 +36,24 @@ class BoardLogic
   end
 
   def draw?
-    puts 'DRAW!' if @turns_taken >= @max_turns
+    puts 'DRAW!'.bold.underline,"\n" if @turns_taken >= @max_turns
+    @game_over = true if @turns_taken >= @max_turns
+  end
+
+  def game_won(player)
+    puts 'GAME OVER'.bold
+    puts "Player #{player.symbol} Wins!\n".underline
+    @game_over = true
   end
 
   def game_over?
     winning_combo = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
-    @board.each_with_index do |item, i|
-      print i, item unless @board[i].is_a? Integer
-      puts "\n"
+    winning_combo.each do |item|
+      game_won(@player_one) if item.all? { |e| @player_one.positions_mark.include?(e) }
+      game_won(@player_two) if item.all? { |e| @player_two.positions_mark.include?(e) }
     end
 
-    draw?
+    draw? unless @game_over
   end
 end
 
@@ -60,20 +68,16 @@ class Player
 
   def position(mark)
     @positions_mark << mark
-    
   end
 end
 
 def check_board_pos(game, pos_chosen)
   error_pos = ''
-  # results = [true, error_pos]
 
-  if pos_chosen > 0 && pos_chosen <= game.max_turns
-    if game.board[pos_chosen - 1].is_a? Integer
-      return [true]
-    else
-      error_pos = 'Position already taken'
-    end
+  if pos_chosen.positive? && pos_chosen <= game.max_turns
+    return [true] if game.board[pos_chosen - 1].is_a? Integer
+
+    error_pos = 'Position already taken' unless game.board[pos_chosen - 1].is_a? Integer
   else
     error_pos = 'Invalid input'
   end

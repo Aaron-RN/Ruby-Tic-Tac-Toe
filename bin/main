@@ -1,19 +1,9 @@
 #!/usr/bin/env ruby
 require './lib/game_logic'
 
-puts "Hello World\n\n"
-
-# $Game.cols = 3
-# $Game.rows = 3
-# $Game = []
-# $PlayerTurn = nil
-# $TurnsTaken = 0
-# $MaxTurns = $Game.cols * $Game.rows
+puts "\nTic Tac Toe\n\n"
 
 class String
-  def gray
-    "\e[38m#{self}\e[0m" 
-  end
   def red
      "\e[31m#{self}\e[0m" 
   end
@@ -22,6 +12,12 @@ class String
   end
   def blue
     "\e[34m#{self}\e[0m"
+  end
+  def bold
+    "\e[1m#{self}\e[22m"
+  end
+  def underline
+    "\e[4m#{self}\e[24m"
   end
 end
 
@@ -72,11 +68,13 @@ def pos_to_board(pos, sym, color)
   mark_position($Game, $Game.player_turn, pos)
   display_board()
   $Game.player_turn == $player_one ? $Game.whos_turn?($player_two) : $Game.whos_turn?($player_one)
-  get_player_input()
+  get_player_input() unless $Game.game_over
 end
 
 def get_player_input
-  puts "Player #{$Game.player_turn.symbol}'s Turn'"
+  puts 'Player ' + $Game.player_turn.symbol.to_s.red + "\'s Turn" if $Game.player_turn.color == "red"
+  puts 'Player ' + $Game.player_turn.symbol.to_s.green + "\'s Turn" if $Game.player_turn.color == "green"
+  puts 'Player ' + $Game.player_turn.symbol.to_s.blue + "\'s Turn" if $Game.player_turn.color == "blue"
   print "Choose an available position to play: "
   pos_chosen = gets.chomp.to_i
   puts "\n"
@@ -84,7 +82,7 @@ def get_player_input
   if check_board_pos($Game, pos_chosen)[0]
     pos_to_board(pos_chosen, $Game.player_turn.symbol, $Game.player_turn.color)
   else
-    puts check_board_pos($Game, pos_chosen)[1]
+    puts check_board_pos($Game, pos_chosen)[1].bold,"\n"
     display_board()
     get_player_input()
   end
