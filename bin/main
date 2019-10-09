@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require './lib/game_logic.rb'
 
 puts "Hello World\n\n"
 
@@ -23,6 +24,8 @@ class String
 end
 
 def initializeBoard
+  player_one = Player.new("X", "green")
+  player_two = Player.new("O", "red")
   for i in 1..BOARD_COLS*BOARD_ROWS
     $Board << i
   end
@@ -71,13 +74,10 @@ def posToBoard(pos, sym, color)
 end
 
 def getPlayerInput
-  #puts "Player #{$PlayerTurn.symbol}'s Turn'"
+  puts "Player #{$PlayerTurn.symbol}'s Turn'"
   print "Choose an available position to play: "
   posChosen = gets.chomp.to_i
   puts "\n"
-  #checkIfInteger(posChosen)
-  #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
-  posToBoard(posChosen, "X", "green")
+
+  posToBoard(1, $PlayerTurn.symbol, "red") if check_board_pos(pos_chosen)
 end
-
-
