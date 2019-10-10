@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require './lib/game_logic'
+require './lib/player'
 
 puts "\nTic Tac Toe\n\n"
 
@@ -67,6 +68,14 @@ end
 def pos_to_board(pos, sym, color)
   mark_position($Game, $Game.player_turn, pos)
   display_board()
+  if $Game.game_over
+    if $Game.winner
+      puts 'GAME OVER'.bold
+      puts "Player #{$Game.player_turn.symbol} Wins!\n".underline
+    elsif $Game.turns_taken >= $Game.max_turns
+      puts 'DRAW!'.bold.underline,"\n"
+    end
+  end
   $Game.player_turn == $player_one ? $Game.whos_turn?($player_two) : $Game.whos_turn?($player_one)
   get_player_input() unless $Game.game_over
 end

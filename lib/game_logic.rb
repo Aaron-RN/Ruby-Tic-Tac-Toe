@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class BoardLogic
-  attr_reader :board, :rows, :cols, :player_turn, :player_one, :player_two, :turns_taken, :max_turns, :game_over
+  attr_reader :board, :rows, :cols, :player_turn, :player_one, :player_two,
+              :turns_taken, :max_turns, :game_over, :winner
 
   def initialize(rows, cols)
     @rows = rows
     @cols = cols
     @board = []
     @player_turn = nil
+    @winner = nil
     @player_one = nil
     @player_two = nil
     @game_over = false
@@ -36,13 +38,11 @@ class BoardLogic
   end
 
   def draw?
-    puts 'DRAW!'.bold.underline,"\n" if @turns_taken >= @max_turns
     @game_over = true if @turns_taken >= @max_turns
   end
 
   def game_won(player)
-    puts 'GAME OVER'.bold
-    puts "Player #{player.symbol} Wins!\n".underline
+    @winner = player
     @game_over = true
   end
 
@@ -54,20 +54,6 @@ class BoardLogic
     end
 
     draw? unless @game_over
-  end
-end
-
-class Player
-  attr_reader :symbol, :positions_mark, :color
-
-  def initialize(symbol, color)
-    @symbol = symbol
-    @positions_mark = []
-    @color = color
-  end
-
-  def position(mark)
-    @positions_mark << mark
   end
 end
 
