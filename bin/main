@@ -1,0 +1,83 @@
+#!/usr/bin/env ruby
+
+puts "Hello World\n\n"
+
+BOARD_COLS = 3
+BOARD_ROWS = 3
+$Board = []
+$PlayerTurn = nil
+
+class String
+  def gray
+    "\e[38m#{self}\e[0m" 
+  end
+  def red
+     "\e[31m#{self}\e[0m" 
+  end
+  def green
+    "\e[32m#{self}\e[0m"
+  end
+  def blue
+    "\e[34m#{self}\e[0m"
+  end
+end
+
+def initializeBoard
+  for i in 1..BOARD_COLS*BOARD_ROWS
+    $Board << i
+  end
+end
+
+initializeBoard()
+
+def displayBoard
+  for i in 0..(BOARD_COLS*BOARD_ROWS)+((BOARD_ROWS-1)*BOARD_COLS)-1
+      if i < BOARD_COLS
+        print " #{$Board[i]}" unless i == BOARD_COLS-1
+        print " |" unless i == BOARD_COLS-1
+        print " #{$Board[i]}" if i == BOARD_COLS-1
+      elsif i < BOARD_COLS*2 && i > BOARD_COLS-1
+        if i == BOARD_COLS
+          puts "\n"
+        end
+        print "----"
+      elsif i < BOARD_COLS*3 && i > (BOARD_COLS*2)-1
+        if i == BOARD_COLS*2
+          puts "\n"
+        end
+        print " #{$Board[i-3]} |" unless i == (BOARD_COLS*3)-1
+        print " #{$Board[i-3]}" if i == (BOARD_COLS*3)-1
+      elsif i < BOARD_COLS*4 && i > (BOARD_COLS*3)-1
+        if i == BOARD_COLS*3
+          puts "\n"
+        end
+        print "----"
+      elsif i < BOARD_COLS*5 && i > (BOARD_COLS*4)-1
+        if i == BOARD_COLS*4
+          puts "\n"
+        end
+        print " #{$Board[i-6]} |" unless i == (BOARD_COLS*5)-1
+        print " #{$Board[i-6]}" if i == (BOARD_COLS*5)-1
+      end
+    end
+    puts "\n \n"
+end
+
+def posToBoard(pos, sym, color)
+  $Board[pos-1] = "#{sym}".green if color == "green"
+  $Board[pos-1] = "#{sym}".red if color == "red"
+  $Board[pos-1] = "#{sym}".blue if color == "blue"
+  displayBoard()
+end
+
+def getPlayerInput
+  #puts "Player #{$PlayerTurn.symbol}'s Turn'"
+  print "Choose an available position to play: "
+  posChosen = gets.chomp.to_i
+  puts "\n"
+  #checkIfInteger(posChosen)
+  #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
+  posToBoard(posChosen, "X", "green")
+end
+
+
