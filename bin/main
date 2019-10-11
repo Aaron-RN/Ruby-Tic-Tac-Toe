@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-puts "Hello World\n\n"
-
 BOARD_COLS = 3
 BOARD_ROWS = 3
 $Board = []
@@ -79,5 +77,3 @@ def getPlayerInput
   #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
   posToBoard(posChosen, "X", "green")
 end
-
-
