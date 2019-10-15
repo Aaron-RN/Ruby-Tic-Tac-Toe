@@ -20,15 +20,20 @@ class String
   end
 end
 
-def initializeBoard
+def initialize_board
   for i in 1..BOARD_COLS*BOARD_ROWS
     $Board << i
   end
 end
 
-initializeBoard()
+def new_game
+  $PlayerTurn = "X"
+  initialize_board()
+  display_board()
+  get_player_input()
+end
 
-def displayBoard
+def display_board
   for i in 0..(BOARD_COLS*BOARD_ROWS)+((BOARD_ROWS-1)*BOARD_COLS)-1
       if i < BOARD_COLS
         print " #{$Board[i]}" unless i == BOARD_COLS-1
@@ -65,15 +70,20 @@ def posToBoard(pos, sym, color)
   $Board[pos-1] = "#{sym}".green if color == "green"
   $Board[pos-1] = "#{sym}".red if color == "red"
   $Board[pos-1] = "#{sym}".blue if color == "blue"
-  displayBoard()
+  display_board()
 end
 
-def getPlayerInput
-  #puts "Player #{$PlayerTurn.symbol}'s Turn'"
+def get_player_input(player_symbol="X")
+  puts "Player #{$PlayerTurn}'s Turn'"
   print "Choose an available position to play: "
   posChosen = gets.chomp.to_i
   puts "\n"
   #checkIfInteger(posChosen)
   #posToBoard(1, $PlayerTurn.symbol, "red") if checkBoardPos(posChosen)
-  posToBoard(posChosen, "X", "green")
+  posToBoard(posChosen, player_symbol, "green")
+  $PlayerTurn == 'X' ? $PlayerTurn = "O" : $PlayerTurn = "X"
+  get_player_input($PlayerTurn)
+
 end
+
+new_game()
