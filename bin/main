@@ -59,7 +59,6 @@ def pos_to_board(pos, sym, color)
       puts 'DRAW!'.bold.underline,"\n"
     end
   end
-  $Game.player_turn == $player_one ? $Game.whos_turn?($player_two) : $Game.whos_turn?($player_one)
   get_player_input() unless $Game.game_over
 end
 
