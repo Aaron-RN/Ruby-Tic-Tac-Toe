@@ -6,7 +6,7 @@ require './lib/player.rb'
 RSpec.describe BoardLogic do
   let(:player_one) { Player.new('X', 'green') }
   let(:player_two) { Player.new('O', 'red') }
-  let(:game) { BoardLogic.new(rows = 3, cols = 3) }
+  let(:game) { BoardLogic.new(3, 3) }
 
   describe '#game_over?' do
     it 'Returns the winning player when the winning combo matches the positioned marks' do
