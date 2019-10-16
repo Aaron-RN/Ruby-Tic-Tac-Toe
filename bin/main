@@ -1,3 +1,141 @@
 #!/usr/bin/env ruby
 
-puts "\nHello World\n\n"
+BOARD_COLS = 3
+BOARD_ROWS = 3
+$turns_taken = 0
+MAX_TURNS = 9
+$game_over = false
+$winner = nil
+$Board = []
+$PlayerTurn = nil
+$player_x_marks = []
+$player_o_marks = []
+
+class String
+  def gray
+    "\e[38m#{self}\e[0m" 
+  end
+  def red
+     "\e[31m#{self}\e[0m" 
+  end
+  def green
+    "\e[32m#{self}\e[0m"
+  end
+  def blue
+    "\e[34m#{self}\e[0m"
+  end
+end
+
+def initialize_board
+  for i in 1..BOARD_COLS*BOARD_ROWS
+    $Board << i
+  end
+end
+
+def new_game
+  $PlayerTurn = "X"
+  initialize_board()
+  display_board()
+  get_player_input()
+end
+
+def display_board
+  for i in 0..(BOARD_COLS*BOARD_ROWS)+((BOARD_ROWS-1)*BOARD_COLS)-1
+      if i < BOARD_COLS
+        print " #{$Board[i]}" unless i == BOARD_COLS-1
+        print " |" unless i == BOARD_COLS-1
+        print " #{$Board[i]}" if i == BOARD_COLS-1
+      elsif i < BOARD_COLS*2 && i > BOARD_COLS-1
+        if i == BOARD_COLS
+          puts "\n"
+        end
+        print "----"
+      elsif i < BOARD_COLS*3 && i > (BOARD_COLS*2)-1
+        if i == BOARD_COLS*2
+          puts "\n"
+        end
+        print " #{$Board[i-3]} |" unless i == (BOARD_COLS*3)-1
+        print " #{$Board[i-3]}" if i == (BOARD_COLS*3)-1
+      elsif i < BOARD_COLS*4 && i > (BOARD_COLS*3)-1
+        if i == BOARD_COLS*3
+          puts "\n"
+        end
+        print "----"
+      elsif i < BOARD_COLS*5 && i > (BOARD_COLS*4)-1
+        if i == BOARD_COLS*4
+          puts "\n"
+        end
+        print " #{$Board[i-6]} |" unless i == (BOARD_COLS*5)-1
+        print " #{$Board[i-6]}" if i == (BOARD_COLS*5)-1
+      end
+    end
+    puts "\n \n"
+end
+
+def draw
+  $game_over = true if $turns_taken >= MAX_TURNS
+  puts 'DRAW' if $game_over
+end
+
+def game_won(player)
+  $game_over = true
+  puts "Player #{player} wins!"
+end
+
+def game_over?
+  winning_combo = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
+  winning_combo.each do |item|
+    game_won("X") if item.all? { |e| $player_x_marks.include?(e) }
+    game_won("O") if item.all? { |e| $player_o_marks.include?(e) }
+  end
+
+  draw() unless $game_over
+end
+
+def check_board_pos(pos_chosen)
+  error_pos = ''
+
+  if pos_chosen.positive? && pos_chosen <= MAX_TURNS
+    return [true] if $Board[pos_chosen - 1].is_a? Integer
+
+    error_pos = 'Position already taken' unless $Board[pos_chosen - 1].is_a? Integer
+  else
+    error_pos = 'Invalid input'
+  end
+
+  [false, error_pos]
+end
+
+def posToBoard(pos, sym, color)
+  $Board[pos-1] = "#{sym}".green if color == "green"
+  $Board[pos-1] = "#{sym}".red if color == "red"
+  $Board[pos-1] = "#{sym}".blue if color == "blue"
+  $turns_taken += 1
+  display_board()
+end
+
+def get_player_input(player_symbol="X", display_input = true)
+  if display_input
+    puts "Player #{$PlayerTurn}'s Turn'"
+    print "Choose an available position to play: "
+  end
+  pos_chosen = gets.chomp.to_i
+  puts "\n"
+  if check_board_pos(pos_chosen)[0]
+    $PlayerTurn == 'X' ? posToBoard(pos_chosen, player_symbol, "green") : posToBoard(pos_chosen, player_symbol, "red")
+    $player_x_marks << pos_chosen if $PlayerTurn == "X"
+    $player_o_marks << pos_chosen if $PlayerTurn == "O"
+    game_over?()
+    $PlayerTurn == 'X' ? $PlayerTurn = "O" : $PlayerTurn = "X"
+    get_player_input($PlayerTurn) unless $game_over
+  else
+    puts check_board_pos(pos_chosen)[1]
+    puts "\n"
+    display_board()
+    print "\nChoose an available position to play: "
+    get_player_input($PlayerTurn, false)
+  end
+
+end
+
+new_game()
