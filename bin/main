@@ -6,6 +6,9 @@ require './lib/player'
 puts "\nTic Tac Toe\n\n"
 
 class String
+  def gray
+    "\e[38m#{self}\e[0m" 
+  end
   def red
      "\e[31m#{self}\e[0m" 
   end
@@ -20,7 +23,6 @@ class String
   end
   def underline
     "\e[4m#{self}\e[24m"
-  end
 end
 
 def new_game
