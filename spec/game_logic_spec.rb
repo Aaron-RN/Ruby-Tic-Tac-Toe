@@ -1,12 +1,45 @@
 # frozen_string_literal: true
 
-require './lib/game_logic.rb'
-require './lib/player.rb'
+require_relative '../lib/game_logic.rb'
+require_relative '../lib/player.rb'
 
 RSpec.describe BoardLogic do
   let(:player_one) { Player.new('X', 'green') }
   let(:player_two) { Player.new('O', 'red') }
   let(:game) { BoardLogic.new(3, 3) }
+
+  describe '#whos_turn?' do
+    it "Sets the game\'s current player\'s turn to the player supplied via the parameter" do
+      game.whos_turn?(player_one)
+      expect(game.player_turn).to eql(player_one)
+    end
+  end
+
+  describe '#player_setup?' do
+    it "Sets the game\'s player one and player two variables to the supplied parameter value" do
+      game.player_setup(player_one, player_two)
+      expect(game.player_one).to eql(player_one)
+      expect(game.player_two).to eql(player_two)
+    end
+  end
+
+  describe '#move_made?' do
+    it "Sets the game\'s current player\'s turn to the player supplied via the parameter" do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      game.move_made(game.player_turn, 2)
+      expect(game.board[2 - 1]).to eql(game.player_one.symbol.green)
+    end
+  end
+
+  describe '#mark_position?' do
+    it "Sets the current player\'s symbol at the supplied position on the board" do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      mark_position(game, game.player_turn, 5)
+      expect(game.board[5 - 1]).to eql(game.player_one.symbol.green)
+    end
+  end
 
   describe '#game_over?' do
     it 'Returns the winning player when the winning combo matches the positioned marks' do
@@ -59,6 +92,16 @@ RSpec.describe BoardLogic do
 
     it 'Returns true if position is available' do
       expect(check_board_pos(game, 9)).to eql([true])
+    end
+  end
+end
+
+RSpec.describe Player do
+  let(:player_one) { Player.new('X', 'green') }
+
+  describe '#position?' do
+    it 'Keeps track of all positions played by the player by added each parameter supplied into an array' do
+      expect(player_one.position(8)).to eql([8])
     end
   end
 end

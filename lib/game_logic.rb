@@ -58,15 +58,6 @@ class BoardLogic
     end
   end
 
-  def draw?
-    @game_over = true if @turns_taken >= @max_turns
-  end
-
-  def game_won(player)
-    @winner = player
-    @game_over = true
-  end
-
   def game_over?
     winning_combo = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
     winning_combo.each do |item|
@@ -75,6 +66,17 @@ class BoardLogic
     end
 
     draw? unless @game_over
+  end
+
+  private
+
+  def draw?
+    @game_over = true if @turns_taken >= @max_turns
+  end
+
+  def game_won(player)
+    @winner = player
+    @game_over = true
   end
 end
 
