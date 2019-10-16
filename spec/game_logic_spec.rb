@@ -42,4 +42,23 @@ RSpec.describe BoardLogic do
       expect(game.winner).to eql(player_one)
     end
   end
+
+  describe '#check_board_pos' do
+    it 'Checks if the position on the board is available or not' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      game.move_made(game.player_turn, 9)
+      expect(check_board_pos(game, 9)).to eql([false, 'Position already taken'])
+    end
+
+    it 'Checks if the position is a valid input' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      expect(check_board_pos(game, 'S'.to_i)).to eql([false, 'Invalid input'])
+    end
+
+    it 'Returns true if position is available' do
+      expect(check_board_pos(game, 9)).to eql([true])
+    end
+  end
 end
