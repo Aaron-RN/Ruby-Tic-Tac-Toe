@@ -57,9 +57,7 @@ class BoardLogic
     @board[pos - 1] = player.symbol.to_s.blue if player.color == 'blue'
     @turns_taken += 1
     game_over?
-    unless @game_over
-      @player_turn == @player_one ? whos_turn?(@player_two) : whos_turn?(@player_one)
-    end
+    return @player_turn == @player_one ? whos_turn?(@player_two) : whos_turn?(@player_one) unless @game_over
   end
 
   def game_over?

@@ -32,7 +32,7 @@ RSpec.describe BoardLogic do
     end
   end
 
-  describe '#mark_position?' do
+  describe '#mark_position' do
     it "Sets the current player\'s symbol at the supplied position on the board" do
       game.whos_turn?(player_one)
       game.player_setup(player_one, player_two)
