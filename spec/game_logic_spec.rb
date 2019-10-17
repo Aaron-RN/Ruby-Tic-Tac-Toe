@@ -42,12 +42,75 @@ RSpec.describe BoardLogic do
   end
 
   describe '#game_over?' do
-    it 'Returns the winning player when the winning combo matches the positioned marks' do
+    it 'Returns the winning player when the winning combo [1,2,3] matches the positioned marks' do
       game.whos_turn?(player_one)
       game.player_setup(player_one, player_two)
       player_one.position(1)
       player_one.position(2)
       player_one.position(3)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [4,5,6] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(4)
+      player_one.position(5)
+      player_one.position(6)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [7,8,9] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(7)
+      player_one.position(9)
+      player_one.position(8)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [7,4,1] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(4)
+      player_one.position(1)
+      player_one.position(7)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [8,5,2] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(8)
+      player_one.position(5)
+      player_one.position(2)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [9,6,3] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(9)
+      player_one.position(6)
+      player_one.position(3)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [7,5,3] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(7)
+      player_one.position(5)
+      player_one.position(3)
+      game.game_over?
+      expect(game.winner).to eql(player_one)
+    end
+    it 'Returns the winning player when the winning combo [9,5,1] matches the positioned marks' do
+      game.whos_turn?(player_one)
+      game.player_setup(player_one, player_two)
+      player_one.position(1)
+      player_one.position(9)
+      player_one.position(5)
       game.game_over?
       expect(game.winner).to eql(player_one)
     end
