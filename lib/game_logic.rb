@@ -1,5 +1,27 @@
 # frozen_string_literal: true
 
+class String
+  def red
+    "\e[31m#{self}\e[0m"
+  end
+
+  def green
+    "\e[32m#{self}\e[0m"
+  end
+
+  def blue
+    "\e[34m#{self}\e[0m"
+  end
+
+  def bold
+    "\e[1m#{self}\e[22m"
+  end
+
+  def underline
+    "\e[4m#{self}\e[24m"
+  end
+end
+
 class BoardLogic
   attr_reader :board, :rows, :cols, :player_turn, :player_one, :player_two,
               :turns_taken, :max_turns, :game_over, :winner
@@ -35,15 +57,7 @@ class BoardLogic
     @board[pos - 1] = player.symbol.to_s.blue if player.color == 'blue'
     @turns_taken += 1
     game_over?
-  end
-
-  def draw?
-    @game_over = true if @turns_taken >= @max_turns
-  end
-
-  def game_won(player)
-    @winner = player
-    @game_over = true
+    return @player_turn == @player_one ? whos_turn?(@player_two) : whos_turn?(@player_one) unless @game_over
   end
 
   def game_over?
@@ -54,6 +68,17 @@ class BoardLogic
     end
 
     draw? unless @game_over
+  end
+
+  private
+
+  def draw?
+    @game_over = true if @turns_taken >= @max_turns
+  end
+
+  def game_won(player)
+    @winner = player
+    @game_over = true
   end
 end
 
