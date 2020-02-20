@@ -19,13 +19,32 @@ The following example game is won by the first player, X:
 
 *A draw occurs if no player is able to match 3 symbols in succession*
 
+![](screenshot.png)
 
-## Authors: 
-### Aaron
-Aaron's Github Profile: https://github.com/Aaron-RN
-### Michael
-Michael's Github Profile: https://github.com/zhuchini
+## Authors
 
+👤 **Aaron Rory**
 
-## Github Link
-Github Link: https://github.com/Aaron-RN/Tic-Tac-Toe
+- Github: [@Aaron-RN](https://github.com/Aaron-RN)
+- Twitter: [@ARNewbold](https://twitter.com/ARNewbold)
+- Linkedin: [Aaron Newbold](https://www.linkedin.com/in/aaron-newbold-1b9233187/)
+
+👤 **Michael Zhu**
+
+- Github: [@zhuchini](https://github.com/zhuchini)
+- Twitter: [@zhuchini](https://twitter.com/)
+- Linkedin: [Michael Zhu](https://www.linkedin.com/in/zhumike/)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check the [issues page](issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## 📝 License
+
+This project is [MIT](lic.url) licensed.
