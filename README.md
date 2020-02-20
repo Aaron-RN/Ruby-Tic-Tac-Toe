@@ -36,7 +36,6 @@ The following example game is won by the first player, X:
 👤 **Michael Zhu**
 
 - Github: [@zhuchini](https://github.com/zhuchini)
-- Twitter: [@zhuchini](https://twitter.com/)
 - Linkedin: [Michael Zhu](https://www.linkedin.com/in/zhumike/)
 
 ## 🤝 Contributing
