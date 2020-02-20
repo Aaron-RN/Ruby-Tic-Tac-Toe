@@ -21,6 +21,10 @@ The following example game is won by the first player, X:
 
 ![](screenshot.png)
 
+## Built With
+
+- Ruby
+
 ## Authors
 
 👤 **Aaron Rory**
